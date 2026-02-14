@@ -7,7 +7,8 @@
     <script>
       // Meme collection started on 27/11/2016
 
-      let memes = []
+      let gifs = []
+      let images = []
 
       function gif(url, tags)
       {
@@ -54,13 +55,16 @@
       function filter(text)
       {
         const result = []
+        const pool = []
+        if (document.getElementById('showGifs').checked) pool.push(...gifs)
+        if (document.getElementById('showImages').checked) pool.push(...images)
 
-        for (var meme of memes)
+        for (var meme of pool)
         {
           if (meme.tags.includes(text))
           {
           result.push(meme.url)
-          }  
+          }
         }
 
         return result
@@ -71,15 +75,17 @@
         document.getElementById('result').textContent = ''
         const input = document.getElementById('input')
         input.style.display = ''
+        document.getElementById('filters').style.display = ''
         input.focus()
-        memes = []
+        gifs = []
+        images = []
 
         for (const gifKey of Object.keys(json.gif)) {
-          memes.push(gif(gifKey, json.gif[gifKey]))
+          gifs.push(gif(gifKey, json.gif[gifKey]))
         }
-        
+
         for (const imageKey of Object.keys(json.image)) {
-          memes.push(image(imageKey, json.image[imageKey]))
+          images.push(image(imageKey, json.image[imageKey]))
         }
       }
 
@@ -117,6 +123,10 @@
   </head>
   <body onload="loadMemes()">
     <input id='input' type='text' style='display:none;width:300px;font-size:1.5em' autofocus onkeyup='search(event, this.value.toLowerCase())' />
+    <span id='filters' style='display:none'>
+      <label><input type='checkbox' id='showGifs' checked /> GIF</label>
+      <label><input type='checkbox' id='showImages' checked /> IMAGE</label>
+    </span>
     <div id='result'></div>
   </body>
 </html>
