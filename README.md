@@ -1,3 +1,3 @@
 # Memes
 
-[Web site](https://the-meme-hub.web.app)
+[Website](https://the-meme-hub.web.app)
