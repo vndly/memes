@@ -68,8 +68,9 @@
 
       function loadList(json)
       {
+        document.getElementById('result').textContent = ''
         const input = document.getElementById('input')
-        input.style.visibility = 'visible'
+        input.style.display = ''
         input.focus()
         memes = []
 
@@ -89,7 +90,7 @@
         if (cache) {
           loadList(JSON.parse(cache))
         } else {
-          document.write('Loading memes…')
+          document.getElementById('result').textContent = 'Loading memes…'
         }
       }
 
@@ -115,7 +116,7 @@
     </script>
   </head>
   <body onload="loadMemes()">
-    <input id='input' type='text' style='visibility:hidden;width:300px;font-size:1.5em' autofocus onkeyup='search(event, this.value.toLowerCase())' />
+    <input id='input' type='text' style='display:none;width:300px;font-size:1.5em' autofocus onkeyup='search(event, this.value.toLowerCase())' />
     <div id='result'></div>
   </body>
 </html>
