@@ -16,4 +16,5 @@
     "javascript",
     "vue"
   ],
+  "liveServer.settings.port": 5501,
 }

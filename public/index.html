@@ -70,13 +70,16 @@
         return result
       }
 
-      function loadList(json)
+      function loadList(json, updateUI)
       {
-        document.getElementById('result').textContent = ''
-        const input = document.getElementById('input')
-        input.style.display = ''
-        document.getElementById('filters').style.display = ''
-        input.focus()
+        if (updateUI) {
+          document.getElementById('result').textContent = ''
+          const input = document.getElementById('input')
+          input.style.display = ''
+          document.getElementById('filters').style.display = ''
+          input.focus()
+        }
+
         gifs = []
         images = []
 
@@ -94,13 +97,15 @@
         const cache = localStorage.getItem('MEMES')
         
         if (cache) {
-          loadList(JSON.parse(cache))
+          loadList(JSON.parse(cache), true)
+          loadRemoteMemes(false)
         } else {
           document.getElementById('result').textContent = 'Loading memes…'
+          loadRemoteMemes(true)
         }
       }
 
-      function loadRemoteMemes()
+      function loadRemoteMemes(updateUI)
       {
         const xhr = new XMLHttpRequest()
         xhr.open("GET", "https://script.google.com/macros/s/AKfycbyw8aRqFno3a1QGq10zLfgYnIQfLf4FG3-YOJjWHajxIFOIEl5m66VhISpYTZvLPe5Kwg/exec")
@@ -108,7 +113,7 @@
            if (xhr.readyState === 4) {
               const json = JSON.parse(xhr.responseText)
               localStorage.setItem('MEMES', xhr.responseText)
-              loadList(json)
+              loadList(json, updateUI)
            }
         }
         xhr.send()
@@ -117,7 +122,6 @@
       function loadMemes()
       {
         loadLocalMemes()
-        loadRemoteMemes()
       }
     </script>
   </head>
